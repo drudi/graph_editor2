@@ -30,3 +30,8 @@ class Canvas(object):
         if a <= b:
             return (a, b)
         return (b, a)
+
+    def draw_horizontal_segment(self, row, leftmost_column, rightmost_column, color):
+        """Draw a horizontal segment on the canvas."""
+        for column in range(leftmost_column, rightmost_column + 1):
+            self.canvas[row - 1][column - 1] = color
