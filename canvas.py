@@ -22,5 +22,11 @@ class Canvas(object):
 
     def draw_vertical_segment(self, column, upper_row, lower_row, color):
         """Draw a vertical segment on the canvas."""
+        upper_row, lower_row = self._order_elements(upper_row, lower_row)
         for row in range(upper_row, lower_row + 1):
             self.canvas[row - 1][column - 1] = color
+
+    def _order_elements(self, a, b):
+        if a <= b:
+            return (a, b)
+        return (b, a)

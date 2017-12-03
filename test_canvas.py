@@ -56,6 +56,11 @@ class TestCanvas(unittest.TestCase):
         canvas.draw_vertical_segment(4, 2, 6, 'X')
         self.assertEqual(self.vertical_line, canvas.canvas)
 
+    def test_draw_vertical_line_with_unordered_parameters(self):
+        canvas = Canvas(5, 6)
+        canvas.draw_vertical_segment(4, 6, 2, 'X')
+        self.assertEqual(self.vertical_line, canvas.canvas)
+
 
 if __name__ == '__main__':
     unittest.main()
