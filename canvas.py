@@ -13,3 +13,14 @@ class Canvas(object):
     def set_pixel(self, column, row, color):
         """Set a singles pixel in the canvas"""
         self.canvas[row - 1][column - 1] = color
+
+    def clear(self):
+        """Reset the canvas, setting all pixels to 'O'"""
+        for row in range(len(self.canvas)):
+            for column in range(len(self.canvas[row])):
+                self.canvas[row][column] = 'O'
+
+    def draw_vertical_segment(self, column, upper_row, lower_row, color):
+        """Draw a vertical segment on the canvas."""
+        for row in range(upper_row, lower_row + 1):
+            self.canvas[row - 1][column - 1] = color

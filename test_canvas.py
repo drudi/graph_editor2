@@ -25,6 +25,16 @@ class TestCanvas(unittest.TestCase):
                 ['O', 'O', 'O', 'O', 'O'],
             ]
 
+        cls.vertical_line = [
+                ['O', 'O', 'O', 'O', 'O'],
+                ['O', 'O', 'O', 'X', 'O'],
+                ['O', 'O', 'O', 'X', 'O'],
+                ['O', 'O', 'O', 'X', 'O'],
+                ['O', 'O', 'O', 'X', 'O'],
+                ['O', 'O', 'O', 'X', 'O'],
+            ]
+
+
 
     def test_create_new_canvas(self):
         canvas = Canvas(5, 6)
@@ -34,6 +44,18 @@ class TestCanvas(unittest.TestCase):
         canvas = Canvas(5, 6)
         canvas.set_pixel(3, 3, 'X')
         self.assertEqual(self.pixel_set, canvas.canvas)
+
+    def test_clear_canvas(self):
+        canvas = Canvas(5, 6)
+        canvas.set_pixel(3, 3, 'X')
+        canvas.clear()
+        self.assertEqual(self.new_canvas, canvas.canvas)
+
+    def test_draw_vertical_line(self):
+        canvas = Canvas(5, 6)
+        canvas.draw_vertical_segment(4, 2, 6, 'X')
+        self.assertEqual(self.vertical_line, canvas.canvas)
+
 
 if __name__ == '__main__':
     unittest.main()
