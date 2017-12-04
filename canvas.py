@@ -51,7 +51,7 @@ class Canvas(object):
         A region is defined as the same color pixels adjacent
         to pixel in the parameter.
         """
-        original_color = self.canvas[row][column] # store the original color
+        original_color = self.canvas[row - 1][column - 1] # store the original color
 
         # Define a recursive closure to search the region
         def fill(r, c):
