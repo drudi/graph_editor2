@@ -43,6 +43,33 @@ class TestCanvas(unittest.TestCase):
                 ['O', 'O', 'O', 'O', 'O'],
             ]
 
+        cls.rectangle = [
+                ['O', 'O', 'O', 'O', 'O'],
+                ['O', 'X', 'X', 'X', 'O'],
+                ['O', 'X', 'X', 'X', 'O'],
+                ['O', 'X', 'X', 'X', 'O'],
+                ['O', 'O', 'O', 'O', 'O'],
+                ['O', 'O', 'O', 'O', 'O'],
+            ]
+
+        cls.region_before = [
+                ['O', 'O', 'O', 'O', 'O'],
+                ['O', 'O', 'X', 'O', 'O'],
+                ['O', 'X', 'X', 'X', 'O'],
+                ['O', 'O', 'X', 'O', 'O'],
+                ['O', 'O', 'O', 'O', 'O'],
+                ['X', 'O', 'O', 'O', 'O'],
+            ]
+
+        cls.region_after = [
+                ['O', 'O', 'O', 'O', 'O'],
+                ['O', 'O', 'M', 'O', 'O'],
+                ['O', 'M', 'M', 'M', 'O'],
+                ['O', 'O', 'M', 'O', 'O'],
+                ['O', 'O', 'O', 'O', 'O'],
+                ['X', 'O', 'O', 'O', 'O'],
+            ]
+
 
     def test_create_new_canvas(self):
         canvas = Canvas(5, 6)
@@ -73,6 +100,28 @@ class TestCanvas(unittest.TestCase):
         canvas = Canvas(5, 6)
         canvas.draw_horizontal_segment(3, 1, 4, 'X')
         self.assertEqual(self.horizontal_line, canvas.canvas)
+
+    def test_draw_horizontal_line_with_unordered_parameters(self):
+        canvas = Canvas(5, 6)
+        canvas.draw_horizontal_segment(3, 4, 1, 'X')
+        self.assertEqual(self.horizontal_line, canvas.canvas)
+
+    def test_draw_rectangle(self):
+        canvas = Canvas(5, 6)
+        canvas.draw_rectangle(2, 2, 4, 4, 'X')
+        self.assertEqual(self.rectangle, canvas.canvas)
+
+    def test_draw_rectangle_with_inverted_points(self):
+        canvas = Canvas(5, 6)
+        canvas.draw_rectangle(4, 4, 2, 2, 'X')
+        self.assertEqual(self.rectangle, canvas.canvas)
+
+    def test_paint_region(self):
+        canvas = Canvas(5, 6)
+        canvas.canvas = self.region_before
+        canvas.paint_region(3, 2, 'M')
+        self.assertEqual(self.region_after, canvas.canvas)
+
 
 
 if __name__ == '__main__':
