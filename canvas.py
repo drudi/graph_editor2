@@ -74,7 +74,7 @@ class Canvas(object):
             fill(r, c - 1)
 
         # Call the closure
-        fill(row, column)
+        fill(row - 1, column - 1)
 
 
 
