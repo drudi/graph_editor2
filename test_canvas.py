@@ -48,7 +48,7 @@ class TestCanvas(unittest.TestCase):
                 ['O', 'X', 'X', 'X', 'O'],
                 ['O', 'X', 'X', 'X', 'O'],
                 ['O', 'X', 'X', 'X', 'O'],
-                ['O', 'O', 'O', 'O', 'O'],
+                ['O', 'X', 'X', 'X', 'O'],
                 ['O', 'O', 'O', 'O', 'O'],
             ]
 
@@ -108,12 +108,12 @@ class TestCanvas(unittest.TestCase):
 
     def test_draw_rectangle(self):
         canvas = Canvas(5, 6)
-        canvas.draw_rectangle(2, 2, 4, 4, 'X')
+        canvas.draw_rectangle(2, 2, 5, 4, 'X')
         self.assertEqual(self.rectangle, canvas.canvas)
 
     def test_draw_rectangle_with_inverted_points(self):
         canvas = Canvas(5, 6)
-        canvas.draw_rectangle(4, 4, 2, 2, 'X')
+        canvas.draw_rectangle(5, 4, 2, 2, 'X')
         self.assertEqual(self.rectangle, canvas.canvas)
 
     def test_paint_region(self):
