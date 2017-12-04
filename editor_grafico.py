@@ -107,8 +107,130 @@ REEEEEEERR
 RRRRRRRRRR
 """
 
+import cmd
+from canvas import Canvas
+from input_validator import IndexValidator
+from canvas_writer import CanvasWriter
+
+class GraphicEditor(cmd.Cmd):
+    """
+    Class to handle commandline input and call the appropriate classes.
+    Extends the Cmd class from the built-in module cmd.
+    """
+
+    prompt = "(editor)->"
+
+    def do_I(self, input_line):
+        """Initialize a new canvas (old canvas is discarded)"""
+        M, N = input_line.split(' ')
+        try:
+            M = int(M)
+            N = int(N)
+        except:
+            print("Only integers accepted.")
+            return False
+        if M < 0 or N < 0:
+            print('Canvas dimensions must be positive.')
+            return False
+        self.canvas = Canvas(M, N)
+
+    def do_X(self, input_line):
+        """Exits the editor"""
+        return True
+
+    def do_C(self, input_line):
+        """Clear the canvas"""
+        self.canvas.clear()
+        print("Canvas clear.")
+
+    def do_L(self, input_line):
+        """Draws a pixel on the current canvas"""
+        X, Y, C = input_line.split(' ') 
+        validator = IndexValidator(self.canvas)
+        try:
+            X = int(X)
+            Y = int(Y)
+            validator.v_validate(X)
+            validator.v_validate(Y)
+        except:
+            print('Only integers accepted')
+            return False
+        self.canvas.set_pixel(X, Y, C)
+
+    def do_V(self, input_line):
+        """Command to draw a vertical line"""
+        X, Y1, Y2, C = input_line.split(' ')
+        validador = IndexValidator(self.canvas)
+        try:
+            X = int(X)
+            Y1 = int(Y1)
+            Y2 = int(Y2)
+            validador.h_validate(X)
+            validador.v_validate(Y1)
+            validador.v_validate(Y2)
+        except:
+            print('Only integers accepted and must be inside limits.')
+            return False
+        self.canvas.draw_vertical_segment(X, Y1, Y2, C)
+
+    def do_H(self, input_line):
+        """Command to draw an horizontal line"""
+        X1, X2, Y, C = input_line.split(' ')
+        validator = IndexValidator(self.canvas)
+        try:
+            X1 = int(X1)
+            X2 = int(X2)
+            Y = int(Y)
+            validator.h_validate(X1)
+            validator.h_validate(X2)
+            validator.v_validate(Y)
+        except:
+            print('Only integers accepted and must be inside limits.')
+            return False
+        self.canvas.draw_horizontal_segment(Y, X1, X2, C)
+
+    def do_K(self, input_line):
+        """Command to draw a rectangle"""
+        X1, Y1, X2, Y2, C = input_line.split(' ')
+        validator = IndexValidator(self.canvas)
+        try:
+            X1 = int(X1)
+            Y1 = int(Y1)
+            X2 = int(X2)
+            Y2 = int(Y2)
+            validator.h_validate(X1)
+            validator.h_validate(X2)
+            validator.v_validate(Y1)
+            validator.v_validate(Y2)
+        except:
+            print('Only integers accepted and must be inside limits.')
+            return False
+        self.canvas.draw_rectangle(Y1, X1, Y2, X2, C)
+
+    def do_F(self, input_line):
+        """Command to paint a region"""
+        X, Y, C = input_line.split(' ')
+        validator = IndexValidator(self.canvas)
+        try:
+            X = int(X)
+            Y = int(Y)
+        except:
+            print('Only integers accepted and must be inside limits.')
+            return False
+        self.canvas.paint_region(Y, X, C)
+            
+    def do_S(self, input_line):
+        """Command to save the canvas in the path provided in the filename"""
+        writer = CanvasWriter(self.canvas)
+        writer.set_filename(input_line)
+        writer.write()
+
+
+
+
+
 def main():
-    pass
+    GraphicEditor().cmdloop()
 
 if __name__ == '__main__':
     main()
